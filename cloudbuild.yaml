@@ -1,0 +1,25 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/practical-album-444402-c4/bank-campaign-model', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/practical-album-444402-c4/bank-campaign-model']
+
+- name: 'gcr.io/practical-album-444402-c4/bank-campaign-model'
+  entrypoint: 'bash'
+  args:
+   - '-c'
+   - |
+      python -m pytest
+
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/jwang8-wiq/model-training-repo.git']
+
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'model-training-repo/bank_campaign_model_training.py', 'gs://us-central1-mlops-airflow-ba9455c3-bucket/dags']
+
+images:
+- 'gcr.io/practical-album-444402-c4/bank-campaign-model'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
