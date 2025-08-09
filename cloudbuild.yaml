@@ -1,25 +1,33 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/practical-album-444402-c4/bank-campaign-model', '.']
+  # args: ['build', '-t', 'gcr.io/practical-album-444402-c4/bank-campaign-model', '.']
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/prefab-atlas-468301-k0/bank-campaign-model/bank-campaign-model-trainer', '.']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/practical-album-444402-c4/bank-campaign-model']
+  # args: ['push', 'gcr.io/practical-album-444402-c4/bank-campaign-model']
+  args: ['push', 'us-central1-docker.pkg.dev/prefab-atlas-468301-k0/bank-campaign-model/bank-campaign-model-trainer']
 
-- name: 'gcr.io/practical-album-444402-c4/bank-campaign-model'
-  entrypoint: 'bash'
-  args:
-   - '-c'
-   - |
-      python -m pytest
+# - name: 'gcr.io/practical-album-444402-c4/bank-campaign-model'
+#   entrypoint: 'bash'
+#   args:
+#    - '-c'
+#    - |
+#       python -m pytest
 
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/jwang8-wiq/model-training-repo.git']
+# - name: 'gcr.io/cloud-builders/git'
+#   args: ['clone', 'https://github.com/jwang8-wiq/model-training-repo.git']
 
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'model-training-repo/bank_campaign_model_training.py', 'gs://us-central1-mlops-airflow-ba9455c3-bucket/dags']
+# - name: 'gcr.io/cloud-builders/gsutil'
+#   args: ['cp', 'model-training-repo/bank_campaign_model_training.py', 'gs://us-central1-mlops-airflow-ba9455c3-bucket/dags']
 
-images:
-- 'gcr.io/practical-album-444402-c4/bank-campaign-model'
+# images:
+# - 'gcr.io/practical-album-444402-c4/bank-campaign-model'
+
+# Step 3: Run the training container
+- name: 'us-central1-docker.pkg.dev/prefab-atlas-468301-k0/bank-campaign-model/bank-campaign-model-trainer'
+  id: 'RunTraining'
+
+
 
 options:
   logging: CLOUD_LOGGING_ONLY
