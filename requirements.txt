@@ -9,3 +9,5 @@ requests
 google-cloud-storage
 google-cloud-bigquery
 dill
+fsspec 
+gcsfs
