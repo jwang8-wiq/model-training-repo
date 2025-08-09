@@ -6,6 +6,6 @@ pyarrow
 pytest
 category_encoders
 requests
-google-cloud-storage==2.19.0
-google-cloud-bigquery==3.29.0
+google-cloud-storage
+google-cloud-bigquery
 dill
